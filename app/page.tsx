@@ -1,6 +1,6 @@
 const Home = () => {
     return (
-        <div className="text-5xl underline">Welcome to Next.js!</div>
+        <div className="text-5xl underline">This fullstack app is being made to learn next.js</div>
     )
 }
 export default Home
