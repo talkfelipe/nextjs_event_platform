@@ -5,14 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6406478b-d522-4c0e-9abc-23ba61160ea1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/(root)/books/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/(root)/home/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/books/[id]/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/books/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/db.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/(root)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(dashboard)/dashboard/analytics/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(dashboard)/dashboard/users/[id]/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(dashboard)/dashboard/users/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(dashboard)/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/about/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/books/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/error.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/home/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/layout.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/page.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/books/[id]/route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/books/route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/db.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/route.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/hello.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +114,7 @@
       <workItem from="1768660231883" duration="132000" />
       <workItem from="1768789263743" duration="1300000" />
       <workItem from="1768790574177" duration="3777000" />
-      <workItem from="1768795178734" duration="5791000" />
+      <workItem from="1768795178734" duration="7128000" />
     </task>
     <servers />
   </component>
