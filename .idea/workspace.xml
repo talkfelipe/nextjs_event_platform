@@ -4,7 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6406478b-d522-4c0e-9abc-23ba61160ea1" name="Changes" comment="" />
+    <list default="true" id="6406478b-d522-4c0e-9abc-23ba61160ea1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/(root)/books/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(root)/home/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/books/[id]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/books/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/db.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(root)/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/page.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +65,7 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(root)/home" />
       <recent name="$PROJECT_DIR$/app/(dashboard)" />
       <recent name="$PROJECT_DIR$/app/(root)" />
       <recent name="$PROJECT_DIR$" />
@@ -94,6 +104,7 @@
       <workItem from="1768660231883" duration="132000" />
       <workItem from="1768789263743" duration="1300000" />
       <workItem from="1768790574177" duration="3777000" />
+      <workItem from="1768795178734" duration="5791000" />
     </task>
     <servers />
   </component>
