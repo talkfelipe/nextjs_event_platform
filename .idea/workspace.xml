@@ -5,16 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6406478b-d522-4c0e-9abc-23ba61160ea1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/about/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/analytics/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/users/[id]/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/users/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/hello.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(dashboard)/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(root)/error.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/(root)/layout.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/about/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/about/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/analytics/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(dashboard)/dashboard/analytics/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/users/[id]/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(dashboard)/dashboard/users/[id]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/users/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(dashboard)/dashboard/users/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(root)/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +64,8 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/(dashboard)" />
+      <recent name="$PROJECT_DIR$/app/(root)" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -99,7 +101,7 @@
       <workItem from="1768547271602" duration="3380000" />
       <workItem from="1768660231883" duration="132000" />
       <workItem from="1768789263743" duration="1300000" />
-      <workItem from="1768790574177" duration="678000" />
+      <workItem from="1768790574177" duration="3310000" />
     </task>
     <servers />
   </component>
