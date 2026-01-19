@@ -1,6 +1,6 @@
 const Page = () => {
     return (
-        <div>Welcome to Next.js 16!</div>
+        <h1>Welcome to Next.js 16!</h1>
     )
 }
 export default Page
