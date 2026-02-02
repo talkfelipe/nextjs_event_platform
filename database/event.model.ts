@@ -29,8 +29,8 @@ const EventSchema = new Schema<IEvent>(
     },
     slug: {
       type: String,
-      unique: true,
       lowercase: true,
+      index: true,
     },
     description: {
       type: String,
@@ -67,7 +67,12 @@ const EventSchema = new Schema<IEvent>(
     mode: {
       type: String,
       required: [true, 'Mode is required'],
-      enum: ['online', 'offline', 'hybrid'],
+      enum: {
+        values: ['online', 'offline', 'hybrid'],
+        message: '{VALUE} is not a supported mode',
+      },
+      lowercase: true,
+      trim: true,
     },
     audience: {
       type: String,
@@ -101,12 +106,9 @@ const EventSchema = new Schema<IEvent>(
   }
 );
 
-// Index for faster slug lookups
-EventSchema.index({ slug: 1 });
-
 // Pre-save hook for slug generation and date/time normalization
-EventSchema.pre('save', async function (next) {
-  const event = this as IEvent;
+EventSchema.pre('save', async function () {
+  const event = this;
 
   // Generate slug only if title is modified or new document
   if (event.isModified('title')) {
@@ -120,28 +122,22 @@ EventSchema.pre('save', async function (next) {
 
   // Normalize date to ISO format if modified
   if (event.isModified('date')) {
-    try {
-      const parsedDate = new Date(event.date);
-      if (isNaN(parsedDate.getTime())) {
-        throw new Error('Invalid date format');
-      }
-      event.date = parsedDate.toISOString().split('T')[0]; // YYYY-MM-DD format
-    } catch (error) {
-      return next(new Error('Date must be a valid date string'));
+    const parsedDate = new Date(event.date);
+    if (isNaN(parsedDate.getTime())) {
+      throw new Error('Invalid date format');
     }
+    event.date = parsedDate.toISOString().split('T')[0]; // YYYY-MM-DD format
   }
 
   // Normalize time format (HH:MM AM/PM) if modified
   if (event.isModified('time')) {
     const timeRegex = /^(0?[1-9]|1[0-2]):[0-5][0-9]\s?(AM|PM)$/i;
     if (!timeRegex.test(event.time.trim())) {
-      return next(new Error('Time must be in format HH:MM AM/PM (e.g., 09:00 AM)'));
+      throw new Error('Time must be in format HH:MM AM/PM (e.g., 09:00 AM)');
     }
     // Normalize spacing and case
     event.time = event.time.trim().toUpperCase();
   }
-
-  next();
 });
 
 // Prevent model recompilation in development (Next.js hot reload)
