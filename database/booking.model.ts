@@ -39,23 +39,17 @@ BookingSchema.index({ eventId: 1 });
 BookingSchema.index({ eventId: 1, email: 1 }, { unique: true });
 
 // Pre-save hook to validate that the referenced event exists
-BookingSchema.pre('save', async function (next) {
+BookingSchema.pre('save', async function () {
   const booking = this as IBooking;
 
   // Only validate eventId if it's modified or new
   if (booking.isModified('eventId')) {
-    try {
-      const eventExists = await Event.findById(booking.eventId);
-      
-      if (!eventExists) {
-        return next(new Error('Referenced event does not exist'));
-      }
-    } catch (error) {
-      return next(new Error('Error validating event reference'));
+    const eventExists = await Event.findById(booking.eventId);
+
+    if (!eventExists) {
+      throw new Error('Referenced event does not exist');
     }
   }
-
-  next();
 });
 
 // Prevent model recompilation in development (Next.js hot reload)
