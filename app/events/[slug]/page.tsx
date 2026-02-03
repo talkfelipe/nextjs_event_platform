@@ -110,7 +110,7 @@ const EventContent = async ({params}: { params: Promise<{ slug: string }> }) => 
                         <EventDetailItem icon="/icons/clock.svg" alt="clock" label={time}/>
                         <EventDetailItem icon="/icons/pin.svg" alt="pin" label={location}/>
                         <EventDetailItem icon="/icons/mode.svg" alt="mode" label={mode}/>
-                        <EventDetailItem icon="/icons/audience.svg" alt="audiece" label={audience}/>
+                        <EventDetailItem icon="/icons/audience.svg" alt="audience" label={audience}/>
                     </section>
 
                     <EventAgenda agendaItems={agenda}/>

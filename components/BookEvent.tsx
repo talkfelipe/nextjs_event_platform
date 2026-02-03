@@ -1,6 +1,7 @@
 'use client';
 
 import {useState} from "react";
+import posthog from "posthog-js";
 
 const BookEvent = () => {
     const [email, setEmail] = useState('');
@@ -8,6 +9,16 @@ const BookEvent = () => {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Track booking submission with non-PII data
+        try {
+            posthog.capture('book_event_submitted', {
+                email_provided: Boolean(email),
+                email_domain: email ? email.split('@')[1] : undefined,
+            });
+        } catch {
+            // Fail silently to not break submission flow
+        }
 
         setTimeout(() => {
             setSubmitted(true);
