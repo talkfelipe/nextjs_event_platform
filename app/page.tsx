@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
 import {IEvent} from "@/database";
+import {cacheLife} from "next/cache";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -19,7 +20,9 @@ async function FeaturedEvents() {
     );
 }
 
-const Page = () => {
+const Page = async () => {
+    'use cache';
+    cacheLife('hours')
     return (
         <section>
             <h1 className="text-center">The Hub for Every Dev <br/> Event You Can`t Miss</h1>
