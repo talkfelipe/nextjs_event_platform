@@ -142,13 +142,17 @@ const EventContent = async ({params}: { params: Promise<{ slug: string }> }) => 
                 </aside>
             </div>
 
-            <div className="flex w-full felx-col gap-4 pt-20">
+            <div className="flex w-full flex-col gap-4 pt-20">
                 <h2>Similar Events</h2>
-                <div className="events">
-                    {similarEvents.length > 0 && similarEvents.map((similarEvent: IEvent) => (
-                        <EventCard key={similarEvent.title} {...similarEvent} />
-                    ))}
-                </div>
+                {similarEvents.length > 0 ? (
+                    <div className="events">
+                        {similarEvents.map((similarEvent: IEvent) => (
+                            <EventCard key={similarEvent._id || similarEvent.slug} {...similarEvent} />
+                        ))}
+                    </div>
+                ) : (
+                    <p className="text-sm text-gray-500">No similar events found at the moment.</p>
+                )}               
             </div>
         </section>
     );

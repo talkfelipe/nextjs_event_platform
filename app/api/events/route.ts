@@ -50,29 +50,47 @@ export async function POST(req: NextRequest) {
             event.mode = event.mode.toLowerCase();
         }
 
-        const file = formData?.get('image') as File | null;
+        let file: File | null = null;
+        let tags: string[] = [];
+        let agenda: string[] = [];
 
-        if (!file) return NextResponse.json({message: 'Image file is required'}, {status: 400})
+        if (formData) {
+            // FormData flow
+            file = formData.get('image') as File | null;
+            const tagsRaw = formData.get("tags") as string | null;
+            const agendaRaw = formData.get("agenda") as string | null;
+            tags = tagsRaw ? parseStringToArray(tagsRaw) : [];
+            agenda = agendaRaw ? parseStringToArray(agendaRaw) : [];
+        } else {
+            // JSON flow
+            if (event.image && typeof event.image === 'string') {
+                // If image is provided as a base64 string or URL, use it directly
+                // Note: In a real app, you'd handle base64 upload to Cloudinary here
+            }
+            tags = Array.isArray(event.tags) ? event.tags : (typeof event.tags === 'string' ? parseStringToArray(event.tags) : []);
+            agenda = Array.isArray(event.agenda) ? event.agenda : (typeof event.agenda === 'string' ? parseStringToArray(event.agenda) : []);
+        }
 
-        const tagsRaw = formData?.get("tags") as string | null;
-        const agendaRaw = formData?.get("agenda") as string | null;
-
-        const tags = tagsRaw ? parseStringToArray(tagsRaw) : [];
-        const agenda = agendaRaw ? parseStringToArray(agendaRaw) : [];
+        if (!file && (!event.image || typeof event.image !== 'string')) {
+            return NextResponse.json({message: 'Image file is required'}, {status: 400});
+        }
 
 
-        const arrayBuffer = await file.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        if (file) {
+            const arrayBuffer = await file.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
 
-        const uploadResult = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({resource_type: 'image', folder: 'DevEvent'}, (error, results) => {
-                if (error) return reject(error);
+            const uploadResult = await new Promise((resolve, reject) => {
+                cloudinary.uploader.upload_stream({resource_type: 'image', folder: 'DevEvent'}, (error, results) => {
+                    if (error) return reject(error);
 
-                resolve(results);
-            }).end(buffer);
-        });
+                    resolve(results);
+                }).end(buffer);
+            });
 
-        event.image = (uploadResult as { secure_url: string }).secure_url;
+            event.image = (uploadResult as { secure_url: string }).secure_url;
+        }
+        // If no file but event.image exists as string, keep it (JSON flow)
 
         const createdEvent = await Event.create({
             ...event,
@@ -98,6 +116,7 @@ export async function GET() {
 
         return NextResponse.json({message: 'Events fetched successfully', events}, {status: 200});
     } catch (e) {
-        return NextResponse.json({message: 'Event fetching failed', error: e}, {status: 500});
+        const errorMessage = e instanceof Error ? e.message : String(e);
+        return NextResponse.json({message: 'Event fetching failed', error: errorMessage}, {status: 500});
     }
 }
