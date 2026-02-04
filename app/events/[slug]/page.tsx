@@ -31,8 +31,8 @@ const EventAgenda = ({agendaItems}: { agendaItems: string[] }) => {
         <div className="agenda">
             <h2>Agenda</h2>
             <ul>
-                {items.map((item) => (
-                    <li key={item}>{item}</li>
+                {items.map((item, index) => (
+                    <li key={index}>{item}</li>
                 ))}
             </ul>
         </div>
@@ -43,8 +43,8 @@ const EventTags = ({tags}: { tags: string[] }) => {
     const items = parseArrayField(tags);
     return (
         <div className="flex flex-row gap-1.5 flex-wrap">
-            {items.map((tag) => (
-                <div className="pill" key={tag}>{tag}</div>
+            {items.map((tag, index) => (
+                <div className="pill" key={index}>{tag}</div>
             ))}
         </div>
     );
@@ -137,7 +137,7 @@ const EventContent = async ({params}: { params: Promise<{ slug: string }> }) => 
                             <p className="text-sm">Be the first to book your spot!</p>
                         )}
 
-                        <BookEvent/>
+                        <BookEvent eventId={event._id} slug={event.slug}/>
                     </div>
                 </aside>
             </div>
@@ -147,7 +147,7 @@ const EventContent = async ({params}: { params: Promise<{ slug: string }> }) => 
                 {similarEvents.length > 0 ? (
                     <div className="events">
                         {similarEvents.map((similarEvent: IEvent) => (
-                            <EventCard key={similarEvent._id || similarEvent.slug} {...similarEvent} />
+                            <EventCard key={similarEvent._id?.toString() || similarEvent.slug} {...similarEvent} />
                         ))}
                     </div>
                 ) : (
