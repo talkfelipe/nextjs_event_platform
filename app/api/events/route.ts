@@ -1,12 +1,33 @@
 import {NextRequest, NextResponse} from "next/server";
 import connectDB from "@/lib/mongodb";
-import { v2 as cloudinary } from 'cloudinary';
+import {v2 as cloudinary} from 'cloudinary';
 import Event from "@/database/event.model";
+
+function parseStringToArray(value: string): string[] {
+    // First try JSON parse
+    try {
+        const parsed = JSON.parse(value);
+        if (Array.isArray(parsed)) return parsed;
+    } catch {
+        // Not valid JSON
+    }
+
+    // Try wrapping in brackets (handles: "item1", "item2" format)
+    try {
+        const parsed = JSON.parse(`[${value}]`);
+        if (Array.isArray(parsed)) return parsed;
+    } catch {
+        // Not valid even when wrapped
+    }
+
+    // Fall back to comma split
+    return value.split(",").map(t => t.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+}
 
 export async function POST(req: NextRequest) {
     try {
         await connectDB();
-        
+
         let event;
         let formData: FormData | null = null;
 
@@ -18,10 +39,10 @@ export async function POST(req: NextRequest) {
                 formData = await req.formData();
                 event = Object.fromEntries(formData.entries());
             } else {
-                return NextResponse.json({ message: 'Unsupported Content-Type'}, { status: 400})
+                return NextResponse.json({message: 'Unsupported Content-Type'}, {status: 400})
             }
-        } catch (e) {
-            return NextResponse.json({ message: 'Invalid data format'}, { status: 400})
+        } catch {
+            return NextResponse.json({message: 'Invalid data format'}, {status: 400})
         }
 
         // Normalize mode to lowercase to match enum
@@ -31,14 +52,21 @@ export async function POST(req: NextRequest) {
 
         const file = formData?.get('image') as File | null;
 
-        if(!file) return NextResponse.json({ message: 'Image file is required'}, { status: 400})
+        if (!file) return NextResponse.json({message: 'Image file is required'}, {status: 400})
+
+        const tagsRaw = formData?.get("tags") as string | null;
+        const agendaRaw = formData?.get("agenda") as string | null;
+
+        const tags = tagsRaw ? parseStringToArray(tagsRaw) : [];
+        const agenda = agendaRaw ? parseStringToArray(agendaRaw) : [];
+
 
         const arrayBuffer = await file.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
 
         const uploadResult = await new Promise((resolve, reject) => {
-            cloudinary.uploader.upload_stream({ resource_type: 'image', folder: 'DevEvent' }, (error, results) => {
-                if(error) return reject(error);
+            cloudinary.uploader.upload_stream({resource_type: 'image', folder: 'DevEvent'}, (error, results) => {
+                if (error) return reject(error);
 
                 resolve(results);
             }).end(buffer);
@@ -46,12 +74,19 @@ export async function POST(req: NextRequest) {
 
         event.image = (uploadResult as { secure_url: string }).secure_url;
 
-        const createdEvent = await Event.create(event);
+        const createdEvent = await Event.create({
+            ...event,
+            tags: tags,
+            agenda: agenda,
+        });
 
-        return NextResponse.json({ message: 'Event created successfully', event: createdEvent }, { status: 201});
+        return NextResponse.json({message: 'Event created successfully', event: createdEvent}, {status: 201});
     } catch (e) {
         console.log(e)
-        return NextResponse.json({ message: 'Event Creation Failed', error: e instanceof Error ? e.message : 'Unknown' }, { status: 500})
+        return NextResponse.json({
+            message: 'Event Creation Failed',
+            error: e instanceof Error ? e.message : 'Unknown'
+        }, {status: 500})
     }
 }
 
@@ -59,10 +94,10 @@ export async function GET() {
     try {
         await connectDB();
 
-        const events = await Event.find().sort({ createdAt: -1 });
+        const events = await Event.find().sort({createdAt: -1});
 
-        return NextResponse.json({ message: 'Events fetched successfully', events }, { status: 200 });
+        return NextResponse.json({message: 'Events fetched successfully', events}, {status: 200});
     } catch (e) {
-        return NextResponse.json({ message: 'Event fetching failed', error: e }, { status: 500 });
+        return NextResponse.json({message: 'Event fetching failed', error: e}, {status: 500});
     }
 }
