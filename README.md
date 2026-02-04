@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevEvent
+
+A modern developer event discovery platform built with Next.js 16. Browse, explore, and book spots for tech events like conferences, meetups, and hackathons.
+
+## Features
+
+- **Event Discovery** - Browse featured tech events with a sleek, modern UI
+- **Event Details** - View comprehensive event information including venue, schedule, and agenda
+- **Booking System** - Reserve spots with email validation and duplicate prevention
+- **Similar Events** - Discover related events based on shared tags
+- **Analytics** - PostHog integration for user behavior tracking
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+
+## Tech Stack
+
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 16 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4 |
+| Database | MongoDB (Mongoose) |
+| UI Components | shadcn/ui |
+| Icons | Lucide React |
+| Analytics | PostHog |
+| Image Hosting | Cloudinary |
+| WebGL Effects | OGL |
+
+## Prerequisites
+
+- Node.js 18.17 or later
+- MongoDB database (local or Atlas)
+- Cloudinary account (for image uploads)
+- PostHog account (optional, for analytics)
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/talkfelipe/nextjs_event_platform.git
+cd nextjs_event_platform
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Set up environment variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# MongoDB
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster>.mongodb.net/<database>
+
+# Cloudinary
+CLOUDINARY_URL=cloudinary://<api_key>:<api_secret>@<cloud_name>
+
+# PostHog Analytics (optional)
+NEXT_PUBLIC_POSTHOG_KEY=your_posthog_key
+NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
+
+# Application
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+├── app/                    # Next.js App Router
+│   ├── api/events/         # Event API routes
+│   ├── events/[slug]/      # Event details page
+│   ├── layout.tsx          # Root layout
+│   └── page.tsx            # Home page
+├── components/             # React components
+│   ├── BookEvent.tsx       # Booking form
+│   ├── EventCard.tsx       # Event card display
+│   ├── LightRays.tsx       # WebGL background
+│   ├── Navbar.tsx          # Navigation header
+│   └── ui/                 # shadcn/ui components
+├── database/               # Mongoose models
+│   ├── event.model.ts      # Event schema
+│   └── booking.model.ts    # Booking schema
+├── lib/                    # Utilities
+│   ├── mongodb.ts          # Database connection
+│   ├── constants.ts        # Sample data
+│   └── actions/            # Server actions
+└── public/                 # Static assets
+    ├── images/             # Event images
+    └── icons/              # SVG icons
+```
 
-## Learn More
+## API Routes
 
-To learn more about Next.js, take a look at the following resources:
+### Events
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/events` | Fetch all events |
+| POST | `/api/events` | Create a new event |
+| GET | `/api/events/[slug]` | Fetch event by slug |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Creating an Event
+
+```bash
+curl -X POST http://localhost:3000/api/events \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "React Conference 2025",
+    "description": "Annual React developer conference",
+    "overview": "Join us for the biggest React event of the year",
+    "image": "https://example.com/image.jpg",
+    "venue": "Convention Center",
+    "location": "San Francisco, CA",
+    "date": "2025-06-15",
+    "time": "09:00 AM",
+    "mode": "hybrid",
+    "audience": "React developers",
+    "agenda": ["Keynote", "Workshops", "Networking"],
+    "organizer": "React Community",
+    "tags": ["react", "javascript", "frontend"]
+  }'
+```
+
+## Database Schema
+
+### Event
+
+| Field | Type | Description |
+|-------|------|-------------|
+| title | String | Event name |
+| slug | String | URL-friendly identifier (auto-generated) |
+| description | String | Short description |
+| overview | String | Detailed overview |
+| image | String | Cloudinary image URL |
+| venue | String | Venue name |
+| location | String | City/address |
+| date | String | ISO format (YYYY-MM-DD) |
+| time | String | Time (HH:MM AM/PM) |
+| mode | Enum | online, offline, or hybrid |
+| audience | String | Target audience |
+| agenda | [String] | Event agenda items |
+| organizer | String | Organizer name |
+| tags | [String] | Event categories |
+
+### Booking
+
+| Field | Type | Description |
+|-------|------|-------------|
+| eventId | ObjectId | Reference to Event |
+| email | String | Attendee email (validated) |
+
+## Scripts
+
+```bash
+npm run dev      # Start development server
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
+
+## Performance Features
+
+- React Compiler for automatic memoization
+- Turbopack file system caching
+- React Server Components
+- Next.js Image optimization with Cloudinary CDN
+- Cached MongoDB connections
+- Suspense boundaries for streaming
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy this app is with [Vercel](https://vercel.com/new):
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push your code to GitHub
+2. Import your repository on Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy
+
+See the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## License
+
+MIT
